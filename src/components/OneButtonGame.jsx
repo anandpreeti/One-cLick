@@ -98,13 +98,19 @@ export default function OneButtonGame({ onGameOver }) {
     }
   }, [onGameOver])
 
-  // Input: spacebar (keyboard) + pointer (tap/click).
+  // Input: spacebar (keyboard) + tap/click ANYWHERE on the screen.
+  // Both listen globally so the whole screen acts as the one button.
   useEffect(() => {
     const onKey = (e) => {
       if (e.code === 'Space' || e.key === ' ') { e.preventDefault(); press() }
     }
+    const onPointer = (e) => { e.preventDefault(); press() }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onPointer)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onPointer)
+    }
   }, [press])
 
   return (
@@ -120,7 +126,6 @@ export default function OneButtonGame({ onGameOver }) {
         ref={canvasRef}
         width={CANVAS_SIZE}
         height={CANVAS_SIZE}
-        onPointerDown={(e) => { e.preventDefault(); press() }}
         style={{ cursor: 'pointer', touchAction: 'none', width: FIELD, height: FIELD, maxWidth: '100%' }}
       />
     </div>
