@@ -35,6 +35,7 @@ export default function StartScreen({ onStart }) {
         ))}
       </div>
       <button onClick={onStart} style={btn}>PRESS START</button>
+      <p style={{ fontSize: 8, color: '#555', marginTop: 8 }}>v1 · BUILT BY PREETI</p>
     </div>
   )
 }
