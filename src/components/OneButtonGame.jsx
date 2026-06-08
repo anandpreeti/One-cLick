@@ -7,6 +7,8 @@ import {
 
 const TAU = Math.PI * 2
 const CENTER = CANVAS_SIZE / 2
+// Display size: never wider than the canvas, but shrink to fit narrow (mobile) screens.
+const FIELD = `min(${CANVAS_SIZE}px, 92vw)`
 const pickTarget = (exclude) => {
   let i
   do { i = Math.floor(Math.random() * ZONES.length) } while (ZONES[i].id === exclude)
@@ -108,7 +110,7 @@ export default function OneButtonGame({ onGameOver }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
       <div style={{
-        display: 'flex', justifyContent: 'space-between', width: CANVAS_SIZE,
+        display: 'flex', justifyContent: 'space-between', width: FIELD,
         fontSize: 12, letterSpacing: 1,
       }}>
         <span style={{ color: '#ffe600' }}>SCORE {score}</span>
@@ -119,7 +121,7 @@ export default function OneButtonGame({ onGameOver }) {
         width={CANVAS_SIZE}
         height={CANVAS_SIZE}
         onPointerDown={(e) => { e.preventDefault(); press() }}
-        style={{ cursor: 'pointer', touchAction: 'none' }}
+        style={{ cursor: 'pointer', touchAction: 'none', width: FIELD, height: FIELD, maxWidth: '100%' }}
       />
     </div>
   )
